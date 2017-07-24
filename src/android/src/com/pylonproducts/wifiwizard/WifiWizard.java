@@ -524,9 +524,9 @@ public class WifiWizard extends CordovaPlugin {
         cordova.getThreadPool().submit(new Runnable() {
             public void run() {
                 Log.v(TAG, "Entering timeout");
-                final int TEN_SECONDS = 10000;
+                final int THIRTY_SECONDS = 30000;
                 try {
-                    Thread.sleep(TEN_SECONDS);
+                    Thread.sleep(THIRTY_SECONDS);
                 } catch (InterruptedException e) {
                     Log.e(TAG, "Received InterruptedException e, " + e);
                     // keep going into error
