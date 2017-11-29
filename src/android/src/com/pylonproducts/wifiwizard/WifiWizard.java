@@ -34,6 +34,8 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
+import android.net.wifi.p2p.WifiP2pManager;
+import android.net.wifi.p2p.WifiP2pManager.*;
 import android.util.Log;
 
 
@@ -51,15 +53,22 @@ public class WifiWizard extends CordovaPlugin {
     private static final String GET_CONNECTED_SSID = "getConnectedSSID";
     private static final String IS_WIFI_ENABLED = "isWifiEnabled";
     private static final String SET_WIFI_ENABLED = "setWifiEnabled";
+    private static final String DISCONNECT_WIFIDIRECT = "disconnectWifiDirect";
     private static final String TAG = "WifiWizard";
 
     private WifiManager wifiManager;
     private CallbackContext callbackContext;
+    private WifiP2pManager wifiP2pManager;
+    private Channel channel;
+    private WifiDirectController wifiDirectController;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         this.wifiManager = (WifiManager) cordova.getActivity().getSystemService(Context.WIFI_SERVICE);
+        this.wifiP2pManager = (WifiP2pManager) cordova.getActivity().getSystemService(Context.WIFI_P2P_SERVICE);
+        this.channel = this.wifiP2pManager.initialize(this, cordova.getActivity().getApplicationContext().getMainLooper(), null);
+        this.wifiDirectManager = new wifiDirectController(wifiP2pManager, channel);
     }
 
     @Override
@@ -107,6 +116,9 @@ public class WifiWizard extends CordovaPlugin {
         }
         else if(action.equals(GET_CONNECTED_SSID)) {
             return this.getConnectedSSID(callbackContext);
+        }
+        else if(action.equals(DISCONNECT_WIFIDIRECT)) {
+            return this.disconnectWifiDirect(callbackContext);
         }
         else {
             callbackContext.error("Incorrect action parameter: " + action);
@@ -650,6 +662,10 @@ public class WifiWizard extends CordovaPlugin {
             callbackContext.error("Cannot enable wifi");
             return false;
         }
+    }
+
+    private boolean disconnectWifiDirect(CallbackContext callbackContext) {
+        wifiDirectController.disconnectAllWifiP2pDevices(callbackContext);        
     }
 
     private boolean validateData(JSONArray data) {
