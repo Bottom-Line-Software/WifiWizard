@@ -118,7 +118,8 @@ public class WifiWizard extends CordovaPlugin {
             return this.getConnectedSSID(callbackContext);
         }
         else if(action.equals(DISCONNECT_WIFIDIRECT)) {
-            return this.disconnectWifiDirect(callbackContext);
+            this.disconnectWifiDirect(callbackContext);
+            return true;
         }
         else {
             callbackContext.error("Incorrect action parameter: " + action);
@@ -664,7 +665,7 @@ public class WifiWizard extends CordovaPlugin {
         }
     }
 
-    private boolean disconnectWifiDirect(CallbackContext callbackContext) {
+    private void disconnectWifiDirect(CallbackContext callbackContext) {
         wifiDirectController.disconnectAllWifiP2pDevices(callbackContext);        
     }
 
