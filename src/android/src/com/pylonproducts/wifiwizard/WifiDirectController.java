@@ -20,16 +20,20 @@ public class WifiDirectController {
         this.channel = channel;
     }
 
-    private void removeWifiP2PGroup() {
+    private void removeWifiP2pGroup(CallbackContext callbackContext) {
         wifiP2pManager.removeGroup(channel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
-                // Do nothing
+                callbackContext.success("DISCONNECTED")
             }
             
             @Override
             public void onFailure(int reasonCode) {
-                Log.d(TAG, "Disconnect failed. Reason:" + reasonCode);
+                if (reasonCode == WifiP2pManager.BUSY) {
+                    callbackContext.success("NO_CONNECTION");
+                } else {
+                    callbackContext.error("ERROR_DISCONNECT_" + reasonCode);
+                }
             }
         });
     }
@@ -38,31 +42,12 @@ public class WifiDirectController {
         wifiP2pManager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
-                // Do nothing
+                removeWifiP2pGroup(callbackContext);
             }
 
             @Override
             public void onFailure(int reasonCode) {
-                Log.i(TAG, "Peer discovery error: " + reasonCode);
-            }
-        });
-
-        wifiP2pManager.requestPeers(channel, new PeerListListener() {
-            @Override
-            public void onPeersAvailable(WifiP2pDeviceList peerList) {
-
-                Collection<WifiP2pDevice> peers = peerList.getDeviceList();
-
-                if (peers.size() == 0) {
-                    Log.d(TAG, "No devices found");
-                    return;
-                }
-
-                for (WifiP2pDevice wifiP2pDevice : peers) {
-                    if (wifiP2pDevice.status == WifiP2pDevice.CONNECTED) {
-                        removeWifiP2PGroup();
-                    }
-                }
+                callbackContext.error("ERROR_DISCOVERY_" + reasonCode)
             }
         });
     }
