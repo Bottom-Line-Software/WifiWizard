@@ -309,6 +309,19 @@ var WifiWizard = {
             return;
         }
         cordova.exec(win, fail, 'WifiWizard', 'setWifiEnabled', [enabled]);
+    },
+
+    /**
+    * Gets 'true' if all Wifi Direct connections are terminated
+    * @param    win     callback function if connections are terminated
+    * @param    fail    callback function if connections could not be terminated
+    */
+    disconnectWifiDirect: function(win, fail) {
+        if (typeof win != "function") {
+            console.log("disconnectWifiDirect second parameter must be a function to handle disconnect result.");
+            return;
+        } 
+        cordova.exec(win, fail, 'WifiWizard', 'disconnectWifiDirect', []);
     }
 };
 
