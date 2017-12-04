@@ -38,6 +38,8 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.*;
 import android.util.Log;
 
+import com.pylonproducts.wifiwizard.WifiDirectController;
+
 
 public class WifiWizard extends CordovaPlugin {
 
@@ -67,8 +69,11 @@ public class WifiWizard extends CordovaPlugin {
         super.initialize(cordova, webView);
         this.wifiManager = (WifiManager) cordova.getActivity().getSystemService(Context.WIFI_SERVICE);
         this.wifiP2pManager = (WifiP2pManager) cordova.getActivity().getSystemService(Context.WIFI_P2P_SERVICE);
-        this.channel = this.wifiP2pManager.initialize(this, cordova.getActivity().getApplicationContext().getMainLooper(), null);
-        this.wifiDirectManager = new wifiDirectController(wifiP2pManager, channel);
+        this.channel = this.wifiP2pManager.initialize(
+                        cordova.getActivity().getApplicationContext(), 
+                        cordova.getActivity().getApplicationContext().getMainLooper(), 
+                        null);
+        this.wifiDirectController = new WifiDirectController(wifiP2pManager, channel);
     }
 
     @Override

@@ -19,11 +19,11 @@ public class WifiDirectController {
         this.channel = channel;
     }
 
-    private void removeWifiP2pGroup(CallbackContext callbackContext) {
+    private void removeWifiP2pGroup(final CallbackContext callbackContext) {
         wifiP2pManager.removeGroup(channel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
-                callbackContext.success("DISCONNECTED")
+                callbackContext.success("DISCONNECTED");
             }
             
             @Override
@@ -37,7 +37,7 @@ public class WifiDirectController {
         });
     }
 
-    public void disconnectAllWifiP2pDevices(CallbackContext callbackContext) {
+    public void disconnectAllWifiP2pDevices(final CallbackContext callbackContext) {
         wifiP2pManager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -46,7 +46,7 @@ public class WifiDirectController {
 
             @Override
             public void onFailure(int reasonCode) {
-                callbackContext.error("ERROR_DISCOVERY_" + reasonCode)
+                callbackContext.error("ERROR_DISCOVERY_" + reasonCode);
             }
         });
     }
