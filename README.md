@@ -89,11 +89,14 @@ Retrieves the current wifi status and passes `true` or `false` to the handler.
 
 Set wifi status. `enabled` is a Boolean type, so to disable the Wifi, you'd execute `WifiWizard.setWifiEnabled(false, win, fail);`
 
-#### `WifiWizard.disconnectWifiDirect(win, fail);
+#### `WifiWizard.disconnectWifiDirect(win, fail);`
 
 Disconnect all Wifi Direct connections. Calls the `win` method if there are no open Wifi Direct connections or the open Wifi Direct connections are terminated. Otherwise, calls fail.
+
 Return values for `win`: `NO_CONNECTION` or `DISCONNECTED`
+
 Return values for `fail`: `ERROR_DISCONNECT_i` or `ERROR_DISCOVERY_i`. Error codes are found [here](https://developer.android.com/reference/android/net/wifi/p2p/WifiP2pManager.ActionListener.html#onFailure(int))
+
 
 ### Changelog:
 
