@@ -8,7 +8,6 @@ import org.apache.cordova.*;
 
 import java.util.Collection;
 
-
 public class WifiDirectController {
     private static final String TAG = "WifiWizard";
     private WifiP2pManager wifiP2pManager;
@@ -52,5 +51,3 @@ public class WifiDirectController {
         });
     }
 }
-
-
