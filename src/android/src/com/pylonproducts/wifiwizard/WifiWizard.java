@@ -38,9 +38,6 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.*;
 import android.util.Log;
 
-import com.pylonproducts.wifiwizard.WifiDirectController;
-
-
 public class WifiWizard extends CordovaPlugin {
 
     private static final String ADD_NETWORK = "addNetwork";
