@@ -64,7 +64,7 @@ public class WifiWizard extends CordovaPlugin {
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        this.wifiManager = (WifiManager) cordova.getActivity().getSystemService(Context.WIFI_SERVICE);
+        this.wifiManager = (WifiManager) cordova.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE)
         this.wifiP2pManager = (WifiP2pManager) cordova.getActivity().getSystemService(Context.WIFI_P2P_SERVICE);
         this.channel = this.wifiP2pManager.initialize(
                         cordova.getActivity().getApplicationContext(), 
@@ -307,7 +307,7 @@ public class WifiWizard extends CordovaPlugin {
                                 connectionState == NetworkInfo.DetailedState.CONNECTED ||
                                         // Android seems to sometimes get stuck in OBTAINING_IPADDR after it has received one
                                         (connectionState == NetworkInfo.DetailedState.OBTAINING_IPADDR && info.getIpAddress() != 0)
-                        );
+                    
                 if (isConnected) {
                     callbackContext.success("Network " + ssidToConnect + " connected!");
                     return true;
