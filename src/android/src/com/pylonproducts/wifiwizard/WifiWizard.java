@@ -306,7 +306,7 @@ public class WifiWizard extends CordovaPlugin {
                         info.getNetworkId() == networkIdToConnect && (
                                 connectionState == NetworkInfo.DetailedState.CONNECTED ||
                                         // Android seems to sometimes get stuck in OBTAINING_IPADDR after it has received one
-                                        (connectionState == NetworkInfo.DetailedState.OBTAINING_IPADDR && info.getIpAddress() != 0)
+                                        (connectionState == NetworkInfo.DetailedState.OBTAINING_IPADDR && info.getIpAddress() != 0));
                     
                 if (isConnected) {
                     callbackContext.success("Network " + ssidToConnect + " connected!");
